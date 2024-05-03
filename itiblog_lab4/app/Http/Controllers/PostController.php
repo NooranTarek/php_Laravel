@@ -9,6 +9,7 @@ use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use Illuminate\Support\Facades\Auth; 
 use App\Jobs\PruneOldPostsJob;
+use Spatie\Tags\Tag;
 
 dispatch(new PruneOldPostsJob());
 
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('posts.create', compact('users'));
+        $tags = Tag::all(); 
+        return view('posts.create', compact('users', 'tags'));
     }
     
 
@@ -47,13 +49,18 @@ class PostController extends Controller
     {
         $file_path = $this->file_operations($request);
         $postCreator_id = Auth::id();
-        // $owner_id = Auth::id();
         $request_params = $request->all(); 
+    
+        // if ($request->has('tags')) {
+        //     $tagNames = explode(',', $request->tags);
+        //     $tags = Tag::findOrCreate($tagNames);
+        //     $post->attachTags($tags);
+        // }
+        
+    
         if ($postCreator_id) {
             $request_params['postCreator_id'] = $postCreator_id;
-            // $request_params['owner_id'] = $owner_id;
-
-        };
+        }
         $request_params['image'] = $file_path; 
         $post = Post::create($request_params);
         return redirect()->route("posts.show", $post->id);

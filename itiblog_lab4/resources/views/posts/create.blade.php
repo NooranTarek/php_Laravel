@@ -107,6 +107,11 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+    <label for="tags">Tags:</label>
+    <input type="text" class="form-control" id="tags" name="tags" placeholder="enter tags separated by commas">
+</div>
+
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Tags\HasTags;
 
 class Post extends Model
 {
+
+    use HasTags;
     use HasFactory;
     // protected $fillable = ['title', 'body', 'image']; 
     protected $fillable = ['title', 'body', 'image', 'user_id', 'postCreator_id','owner_id']; // Add 'postCreator_id' to the fillable array
